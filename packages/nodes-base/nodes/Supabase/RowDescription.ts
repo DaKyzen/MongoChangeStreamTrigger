@@ -31,6 +31,11 @@ export const rowOperations: INodeProperties[] = [
 				description: 'Delete a row',
 			},
 			{
+				name: 'Get',
+				value: 'get',
+				description: 'Get a row',
+			},
+			{
 				name: 'Get All',
 				value: 'getAll',
 				description: 'Get all rows',
@@ -66,6 +71,7 @@ export const rowFields: INodeProperties[] = [
 				operation: [
 					'create',
 					'delete',
+					'get',
 					'getAll',
 					'update',
 				],
@@ -182,6 +188,56 @@ export const rowFields: INodeProperties[] = [
 	/*                                row:delete                                  */
 	/* -------------------------------------------------------------------------- */
 	...getFilters(['row'], ['delete']),
+	/* -------------------------------------------------------------------------- */
+	/*                                row:get                                     */
+	/* -------------------------------------------------------------------------- */
+	{
+		displayName: 'Row Primary Key',
+		name: 'primaryKey',
+		type: 'fixedCollection',
+		typeOptions: {
+			multipleValues: true,
+		},
+		displayOptions: {
+			show: {
+				resource: [
+					'row',
+				],
+				operation: [
+					'get',
+				],
+			},
+		},
+		default: '',
+		placeholder: 'Add Primary Key Column',
+		options: [
+			{
+				displayName: 'Primary Key Column',
+				name: 'data',
+				values: [
+					{
+						displayName: 'Name',
+						name: 'keyName',
+						type: 'options',
+						typeOptions: {
+							loadOptionsDependsOn: [
+								'tableId',
+							],
+							loadOptionsMethod: 'getTableColumns',
+						},
+						default: '',
+						description: '',
+					},
+					{
+						displayName: 'Value',
+						name: 'keyValue',
+						type: 'string',
+						default: '',
+					},
+				],
+			},
+		],
+	},
 	/* -------------------------------------------------------------------------- */
 	/*                                  row:getAll                                */
 	/* -------------------------------------------------------------------------- */

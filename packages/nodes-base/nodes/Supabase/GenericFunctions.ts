@@ -39,7 +39,6 @@ export async function supabaseApiRequest(this: IExecuteFunctions | IExecuteSingl
 		if (Object.keys(body).length === 0) {
 			delete options.body;
 		}
-
 		//@ts-ignore
 		return await this.helpers?.request(options);
 
@@ -65,10 +64,6 @@ export function getFilters(
 			type: 'options',
 			options: [
 				{
-					name: 'None',
-					value: 'none',
-				},
-				{
 					name: 'Build Manually',
 					value: 'manual',
 				},
@@ -83,7 +78,7 @@ export function getFilters(
 					operation: operations,
 				},
 			},
-			default: 'none',
+			default: 'manual',
 		},
 		{
 			displayName: 'Must Match',
@@ -289,6 +284,9 @@ export const buildOrQuery = (key: IDataObject) => {
 	return `${key.keyName}.${key.condition}.${key.keyValue}`;
 };
 
+export const buildGetQuery = (obj: IDataObject, value: IDataObject) => {
+	return Object.assign(obj, { [`${value.keyName}`]: `eq.${value.keyValue}` });
+};
 
 export async function validateCrendentials(
 	this: ICredentialTestFunctions,
